@@ -1,11 +1,5 @@
 package com.centrifugal.centrifuge.android;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-
 import android.util.Log;
 
 import com.centrifugal.centrifuge.android.async.Future;
@@ -27,8 +21,6 @@ import com.centrifugal.centrifuge.android.message.presence.PresenceMessage;
 import com.centrifugal.centrifuge.android.subscription.ActiveSubscription;
 import com.centrifugal.centrifuge.android.subscription.SubscriptionRequest;
 
-import org.java_websocket.WebSocket;
-import org.java_websocket.WebSocketAdapter;
 import org.java_websocket.client.DefaultSSLWebSocketClientFactory;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
@@ -40,13 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.net.URI;
-import java.nio.channels.ByteChannel;
 import java.nio.channels.NotYetConnectedException;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +44,11 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.net.ssl.SSLContext;
 
 /**
  * This file is part of centrifuge-android
@@ -114,6 +106,7 @@ public class Centrifugo {
     private JoinLeaveListener joinLeaveListener;
 
     private Map<String, DownstreamMessageListener> commandListeners = new HashMap<>();
+
 
     protected Centrifugo(final String wsURI, final String userId, final String clientId, final String token, final String tokenTimestamp, final String info) {
         this.wsURI = wsURI;
@@ -259,9 +252,9 @@ public class Centrifugo {
         state = STATE_ERROR;
     }
 
-    protected void onSubscriptionError(@Nullable final String subscriptionError) {
+    protected void onSubscriptionError(@Nullable final String channel, @Nullable final String subscriptionError) {
         if (subscriptionListener != null) {
-            subscriptionListener.onSubscriptionError(null, subscriptionError); //FIXME: rewrite using channel name
+            subscriptionListener.onSubscriptionError(channel, subscriptionError); //FIXME: rewrite using channel name
         }
     }
 
@@ -311,9 +304,12 @@ public class Centrifugo {
                 @Override
                 public void onDownstreamMessage(final DownstreamMessage message) {
                     SubscribeMessage subscribeMessage = (SubscribeMessage) message;
+
                     String subscriptionError = subscribeMessage.getError();
+                    String channelError = ((SubscribeMessage) message).getChannel();
                     if (subscriptionError != null) {
-                        onSubscriptionError(subscriptionError);
+                        //((SubscribeMessage) message).getChannel();
+                        onSubscriptionError(channelError, subscriptionError);
                         return;
                     }
                     String channelName = subscribeMessage.getChannel();

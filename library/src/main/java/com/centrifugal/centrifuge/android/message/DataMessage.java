@@ -27,9 +27,6 @@ public class DataMessage extends DownstreamMessage {
     @Nullable
     private Info info;
 
-    @Nonnull
-    private Date timestamp;
-
     public static DataMessage fromBody(final JSONObject jsonObject) {
         DataMessage dataMessage = new DataMessage();
         dataMessage.setBody(jsonObject);
@@ -64,10 +61,6 @@ public class DataMessage extends DownstreamMessage {
             JSONObject channelInfo = infoJSON.optJSONObject("channel_info");
             info = new Info(user, defaultInfo, channelInfo);
         }
-
-
-        String timestampString = body.optString("timestamp");
-        timestamp = new Date(Long.valueOf(timestampString));
     }
 
     public String getData() {
@@ -82,11 +75,6 @@ public class DataMessage extends DownstreamMessage {
     @Nullable
     public Info getInfo() {
         return info;
-    }
-
-    @Nonnull
-    public Date getTimestamp() {
-        return timestamp;
     }
 
     @Nonnull

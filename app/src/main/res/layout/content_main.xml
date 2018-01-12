@@ -19,14 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Web application address"
-        android:text="192.168.31.203:1337"/>
+        android:text="village-kids.dev.gbksoft.net:8100"/>
 
     <EditText
         android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="User name"
-        android:text="User1337"/>
+        android:text="test.1.sitter@example.com"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Channel name"
-            android:text="Test-channel"/>
+            android:text="$1_4#1,4"/>
 
         <Button
             android:id="@+id/subscribe"
