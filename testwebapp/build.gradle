@@ -1,9 +1,9 @@
 apply plugin: 'java'
 
 dependencies {
-    compile files('libs/testcontainers-1.0.5.jar')
-    compile 'org.nanohttpd:nanohttpd:2.2.0'
-    compile 'commons-cli:commons-cli:1.3.1'
-    compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs/testcontainers-1.0.5.jar')
+    implementation 'org.nanohttpd:nanohttpd:2.2.0'
+    implementation 'commons-cli:commons-cli:1.3.1'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
